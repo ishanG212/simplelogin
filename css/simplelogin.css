@@ -1,3 +1,4 @@
+
 .simplelogin .name {
   background-image: url(../images/menu-deploy-icon.png);
 }
@@ -229,7 +230,7 @@
 
 
 /* Iphone & Smartphone */
-@media only screen and (max-width:991px) {
+@media only screen and (max-width: 991px) {
   .simplelogin input[type="text"],
   .simplelogin input[type="password"] {
     background-position: 10px center;
@@ -239,7 +240,7 @@
 
 
 /* Between Smart phones and Tablet Screen Sizes*/
-@media only screen and (max-width:767px) {
+@media only screen and (max-width: 767px) {
   .simplelogin .ex-center-position {
     position: static;
     display: block;
