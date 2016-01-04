@@ -188,7 +188,7 @@ function simplelogin_theme() {
   return array(
     'sl_imageupload' => array(
       'render element' => 'element',
-      ),
+    ),
   );
 }
 
@@ -203,7 +203,7 @@ function theme_sl_imageupload($variables) {
     $array = array(
       'style_name' => 'thumbnail',
       'path' => $uri,
-      'getsize' => FALSE
+      'getsize' => FALSE,
     );
     $opt .= '<div>' . theme('image_style', $array) . '</div>';
   }
