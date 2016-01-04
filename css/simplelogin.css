@@ -1,4 +1,3 @@
-
 .simplelogin .name {
   background-image: url(../images/menu-deploy-icon.png);
 }
@@ -228,7 +227,6 @@
   background-image: none !important;
 }
 
-
 /* Iphone & Smartphone */
 @media only screen and (max-width: 991px) {
   .simplelogin input[type="text"],
@@ -237,7 +235,6 @@
     padding: 10px 10px 10px 50px;
   }
 }
-
 
 /* Between Smart phones and Tablet Screen Sizes*/
 @media only screen and (max-width: 767px) {
