@@ -1,4 +1,3 @@
-
 INSTALLATION
 ============
 1. Install the Simplelogin module the usual way at admin/build/modules.

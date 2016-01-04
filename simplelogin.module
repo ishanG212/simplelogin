@@ -1,26 +1,26 @@
 <?php
 /**
  * @file
- * The Login screens, which controls the customized background image with themes.
- **/
+ * The Login screens, which controls the customized background image.
+ */
 
-/*
-* Implements of hook_preprocess_page()
-*/
+/**
+ * Implements of hook_preprocess_page()
+ */
 function simplelogin_preprocess_page(&$variables, $hook) {
   $path = drupal_get_path_alias();
   $user_path = array('user', 'user/login', 'user/password', 'user/register');
-    if (user_is_anonymous()) {
+  if (user_is_anonymous()) {
     if (in_array($path, $user_path)) {
       drupal_add_css(drupal_get_path('module', 'simplelogin') . "/css/simplelogin.css", array('type' => 'file', 'weight' => 999, 'group' => CSS_THEME));
-      $variables['theme_hook_suggestions'][] = 'page__simplelogin';    
+      $variables['theme_hook_suggestions'][] = 'page__simplelogin';
     }
   }
 }
 
-/*
-* Implements of hook_preprocess_html()
-*/
+/**
+ * Implements of hook_preprocess_html()
+ */
 function simplelogin_preprocess_html(&$variables) {
   $path = drupal_get_path_alias();
   $user_path = array('user', 'user/login', 'user/password', 'user/register');
@@ -29,26 +29,24 @@ function simplelogin_preprocess_html(&$variables) {
   }
 }
 
-/*
-* Implements of hook_theme_registry_alter()
-*/
-function simplelogin_theme_registry_alter(&$theme_registry) {  
-  $module_path = drupal_get_path('module', 'simplelogin'); 
+/**
+ * Implements of hook_theme_registry_alter()
+ */
+function simplelogin_theme_registry_alter(&$theme_registry) {
+  $module_path = drupal_get_path('module', 'simplelogin');
   $theme_registry['page__simplelogin'] = array(
     'template' => $module_path . '/templates/page--simplelogin',
     'type' => 'theme_engine',
     'theme path' => $module_path . '/templates',
     'render element' => 'page',
-  );
+    );
 }
 
-/*
-* Implements of hook_form_alter()
-*/
-function simplelogin_form_alter(&$form, &$form_state, $form_id) {
-  
-  $types = array('textfield', 'email', 'textarea', 'password', 'container');  
-  
+/**
+ * Implements of hook_form_alter()
+ */
+function simplelogin_form_alter(&$form, &$form_state, $form_id) {  
+  $types = array('textfield', 'email', 'textarea', 'password', 'container');
   foreach ($form as $key => $value) {
     switch ($form_id) {
       case 'user_register_form':
@@ -61,7 +59,6 @@ function simplelogin_form_alter(&$form, &$form_state, $form_id) {
             }
           }
         }
-
         break;
       case 'user_login':
         $form['actions']['submit']['#value'] = 'Login to Account';
@@ -81,9 +78,9 @@ function simplelogin_form_alter(&$form, &$form_state, $form_id) {
 
 }
 
-/*
-* Add Placeholders, Title(invisible), Description(hide) to captcha input field
-*/
+/**
+ * Add Placeholders, Title(invisible), Description(hide) to captcha input field
+ */
 function simplelogin_set_captcha(&$element) {
   $element['captcha_widgets']['captcha_response']['#attributes']['placeholder'] = t('Verification Code');
   $element['captcha_widgets']['captcha_response']['#title_display'] = 'invisible';
@@ -91,9 +88,9 @@ function simplelogin_set_captcha(&$element) {
   return $element;
 }
 
-/*
-* Implements of hook_menu()
-*/
+/**
+ * Implements of hook_menu()
+ */
 function simplelogin_menu() {
   $items = array();
   $items['admin/config/simplelogin'] = array(
@@ -103,7 +100,7 @@ function simplelogin_menu() {
     'weight' => 3,
     'page callback' => 'system_admin_menu_block_page',
     'access arguments' => array('administer site configuration'),
-  );
+    );
   $items['admin/config/simplelogin/loginbg'] = array(
     'title' => 'Login Configuration Settings',
     'description' => 'A form to upload an Image purpose of login background',
@@ -111,7 +108,7 @@ function simplelogin_menu() {
     'page arguments' => array('simplelogin_background_form'),
     'access arguments' => array('administer site configuration'),
     'type' => MENU_NORMAL_ITEM,
-  );
+    );
   return $items;
 }
 
@@ -174,8 +171,8 @@ function simplelogin_background_form_submit($form, &$form_state) {
 }
 
 /**
-* Implements hook_theme().
-*/
+ * Implements hook_theme().
+ */
 function simplelogin_theme() {
   return array(
     'sl_imageupload' => array(
@@ -185,28 +182,26 @@ function simplelogin_theme() {
 }
 
 /**
-* Implements theme_sl_imageupload theme callback.
-*/
+ * Implements theme_sl_imageupload theme callback.
+ */
 function theme_sl_imageupload($variables) {
   $element = $variables['element'];
   $opt = '';
   if ($element['fid']['#value'] != 0) {
     $opt .= '<div>' . theme('image_style', array('style_name' => 'thumbnail', 'path' => file_load($element['fid']['#value'])->uri, 'getsize' => FALSE)) . '</div>';
   }
-
   if ($element['fid']['#value'] != 0) {
     $element['filename']['#markup'] .= ' <span class="file-size">(' . format_size($element['#file']->filesize) . ')</span> ';
   }
   $opt .= drupal_render_children($element);
-
   return $opt;
 }
 
-/*
-* Implements hook_init()
-*/
+/**
+ * Implements hook_init()
+ */
 function simplelogin_init() {
-  $variable = variable_get('simplelogin_fid', '');  
+  $variable = variable_get('simplelogin_fid', '');
   if ($variable) {
     $file = file_load($variable);
     $bgimg = file_create_url($file->uri);
