@@ -3,7 +3,14 @@
  * @file
  * Customize login page HTML structure
  */
- $path = drupal_get_path_alias(); 
+ $path = drupal_get_path_alias();
+ $variable = variable_get('simplelogin_fid', '');
+   if ($variable) {
+     $file = file_load($variable);
+     $bgimg = file_create_url($file->uri);
+     $css = "body.simplelogin {background-image: url('$bgimg') }";
+     drupal_add_css($css, 'inline');
+   }
 ?>
 <div class="loginregis">  
   <?php if(($path == 'user/password') || ($path == 'user/register')): ?>

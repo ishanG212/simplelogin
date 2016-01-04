@@ -200,7 +200,7 @@ function theme_sl_imageupload($variables) {
 /**
  * Implements hook_init()
  */
-function simplelogin_init() {
+/*function simplelogin_init() {
   $variable = variable_get('simplelogin_fid', '');
   if ($variable) {
     $file = file_load($variable);
@@ -208,4 +208,4 @@ function simplelogin_init() {
     $css = "body.simplelogin {background-image: url('$bgimg') }";
     drupal_add_css($css, 'inline');
   }
-}
+}*/
