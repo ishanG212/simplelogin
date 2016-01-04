@@ -186,9 +186,9 @@ function simplelogin_background_form_submit($form, &$form_state) {
  */
 function simplelogin_theme() {
   return array(
-      'sl_imageupload' => array(
+    'sl_imageupload' => array(
       'render element' => 'element',
-    ),
+      ),
   );
 }
 
@@ -200,7 +200,11 @@ function theme_sl_imageupload($variables) {
   $opt = '';
   if ($element['fid']['#value'] != 0) {
     $uri = file_load($element['fid']['#value'])->uri;
-    $array = array('style_name' => 'thumbnail', 'path' => $uri, 'getsize' => FALSE);
+    $array = array(
+      'style_name' => 'thumbnail',
+      'path' => $uri,
+      'getsize' => FALSE
+    );
     $opt .= '<div>' . theme('image_style', $array) . '</div>';
   }
   if ($element['fid']['#value'] != 0) {
