@@ -134,7 +134,7 @@ function simplelogin_background_form($form, &$form_state) {
     '#process' => array('simplelogin_my_file_element_process'),
     '#theme' => 'sl_imageupload',
   );
-  $form['#submit'][] = 'login_background_form_submit';
+  $form['#submit'][] = 'simplelogin_background_form_submit';
   return system_settings_form($form);
 }
 
