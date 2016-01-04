@@ -14,10 +14,10 @@
 ?>
 <div class="loginregis">  
   <?php if(($path == 'user/password') || ($path == 'user/register')): ?>
-    <?php print l( 'Login-In', 'user/login', array('attributes' => array('class' => array('signup'))) ); ?>
+    <?php print l(t('Login-In'), 'user/login', array('attributes' => array('class' => array('signup')))); ?>
   <?php else: ?>
     <?php if (variable_get('user_register')): ?>
-      <?php print l( 'Sign-up', 'user/register', array('attributes' => array('class' => array('signup'))) ); ?>
+      <?php print l(t('Sign-up'), 'user/register', array('attributes' => array('class' => array('signup')))); ?>
     <?php endif; ?>
   <?php endif; ?>
   <div class="ex-center-position">
@@ -31,7 +31,7 @@
   	<?php print $messages; ?>
   	<?php print render($page['content']); ?>
   	<?php if(($path == 'user') || ($path == 'user/login')): ?>
-  	  <p>Forgot password? <?php print l('Click here', 'user/password'); ?></p>
+  	  <p>Forgot password? <?php print l(t('Click here'), 'user/password'); ?></p>
   	<?php endif; ?>
   </div>
 </div>

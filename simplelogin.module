@@ -5,7 +5,7 @@
  */
 
 /**
- * Implements of hook_preprocess_page()
+ * Implements hook_preprocess_page() for page--simplelogin.tpl.php.
  */
 function simplelogin_preprocess_page(&$variables, $hook) {
   $path = drupal_get_path_alias();
@@ -19,7 +19,7 @@ function simplelogin_preprocess_page(&$variables, $hook) {
 }
 
 /**
- * Implements of hook_preprocess_html()
+ * Implements of hook_preprocess_html().
  */
 function simplelogin_preprocess_html(&$variables) {
   $path = drupal_get_path_alias();
@@ -30,7 +30,7 @@ function simplelogin_preprocess_html(&$variables) {
 }
 
 /**
- * Implements of hook_theme_registry_alter()
+ * Implements of hook_theme_registry_alter().
  */
 function simplelogin_theme_registry_alter(&$theme_registry) {
   $module_path = drupal_get_path('module', 'simplelogin');
@@ -43,7 +43,7 @@ function simplelogin_theme_registry_alter(&$theme_registry) {
 }
 
 /**
- * Implements of hook_form_alter()
+ * Implements of hook_form_alter().
  */
 function simplelogin_form_alter(&$form, &$form_state, $form_id) {  
   $types = array('textfield', 'email', 'textarea', 'password', 'container');
@@ -79,7 +79,7 @@ function simplelogin_form_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
- * Add Placeholders, Title(invisible), Description(hide) to captcha input field
+ * Add Placeholders, Title(invisible), Description(hide) to captcha input field.
  */
 function simplelogin_set_captcha(&$element) {
   $element['captcha_widgets']['captcha_response']['#attributes']['placeholder'] = t('Verification Code');
@@ -89,7 +89,7 @@ function simplelogin_set_captcha(&$element) {
 }
 
 /**
- * Implements of hook_menu()
+ * Implements of hook_menu().
  */
 function simplelogin_menu() {
   $items = array();
@@ -122,16 +122,14 @@ function simplelogin_background_form($form, &$form_state) {
     '#upload_location' => 'public://simplelogin/',
     '#upload_validators' => array(
       'file_validate_extensions' => array('gif png jpg jpeg'),
-      'file_validate_size' => array(1024*1024*1024),
+      'file_validate_size' => array(1024 * 1024 * 1024),
     ),
     '#progress_indicator' => 'throbber',
     '#progress_message' => 'Uploading...',
     '#process' => array('simplelogin_my_file_element_process'),
     '#theme' => 'sl_imageupload',
-  );
-  
-  $form['#submit'][] = 'login_background_form_submit';
- 
+  );  
+  $form['#submit'][] = 'login_background_form_submit'; 
   return system_settings_form($form);
 }
 
@@ -143,8 +141,8 @@ function simplelogin_my_file_element_process($element, &$form_state, $form) {
 
 function simplelogin_background_form_submit($form, &$form_state) {
   global $user;
-  if (isset($form_state['values']['login_bgimage']) 
-    && is_numeric($form_state['values']['login_bgimage']) 
+  if (isset($form_state['values']['login_bgimage'])
+    && is_numeric($form_state['values']['login_bgimage'])
     && ($form_state['values']['login_bgimage'] > 0)) {
     $file = file_load($form_state['values']['login_bgimage']);
     $file->status = FILE_STATUS_PERMANENT;
@@ -198,7 +196,7 @@ function theme_sl_imageupload($variables) {
 }
 
 /**
- * Implements hook_init()
+ * Implements hook_init().
  */
 /*function simplelogin_init() {
   $variable = variable_get('simplelogin_fid', '');
