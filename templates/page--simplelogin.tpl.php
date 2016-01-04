@@ -1,7 +1,7 @@
-<?php 
+<?php
 /**
  * @file
- * Customize login page HTML structure
+ * Customize login page HTML structure.
  */
  $path = drupal_get_path_alias();
  $variable = variable_get('simplelogin_fid', '');
