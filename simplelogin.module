@@ -173,7 +173,7 @@ function simplelogin_background_form_submit($form, &$form_state) {
     if (variable_get('simplelogin_fid', '') != '') {
       $file = file_load(variable_get('simplelogin_fid', ''));
       if ($file->fid) {
-        // Delete the file and the usage record
+        // Delete the file and the usage record.
         file_delete($file, TRUE);
       }
       variable_set('simplelogin_fid', '');
@@ -186,8 +186,8 @@ function simplelogin_background_form_submit($form, &$form_state) {
  */
 function simplelogin_theme() {
   return array(
-    'sl_imageupload' => array(
-    'render element' => 'element',
+      'sl_imageupload' => array(
+      'render element' => 'element',
     ),
   );
 }
@@ -199,7 +199,8 @@ function theme_sl_imageupload($variables) {
   $element = $variables['element'];
   $opt = '';
   if ($element['fid']['#value'] != 0) {
-    $array = array('style_name' => 'thumbnail', 'path' => file_load($element['fid']['#value'])->uri, 'getsize' => FALSE);
+    $uri = file_load($element['fid']['#value'])->uri;
+    $array = array('style_name' => 'thumbnail', 'path' => $uri, 'getsize' => FALSE);
     $opt .= '<div>' . theme('image_style', $array) . '</div>';
   }
   if ($element['fid']['#value'] != 0) {
