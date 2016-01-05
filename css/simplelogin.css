@@ -1,5 +1,8 @@
-.simplelogin {
-  /*background-image: url(../images/login-banner.jpg);*/
+/**
+ * @file
+ * The Login screens, which controls the customized background image.
+ */
+ .simplelogin {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -38,7 +41,6 @@
   width: 96%;
   text-indent: 80px;
   text-align: left;
-  /*font-family: 'Roboto', sans-serif;*/
   font-weight: lighter;
 }
 
@@ -68,7 +70,6 @@
   outline: none;
   font-weight: lighter;
 }
-
 
 .login-logo {
   text-decoration: none;
@@ -166,7 +167,6 @@
 }
 
 /* placeholder */
-
 .simplelogin ::-webkit-input-placeholder {
   color: #fff;
 }
@@ -227,7 +227,7 @@
   text-align: left;
 }
 
-/* Iphone & Smartphone */
+/* Iphone and Smartphone */
 @media only screen and (max-width: 991px) {
   .simplelogin input[type="text"],
   .simplelogin input[type="password"] {
