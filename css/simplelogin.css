@@ -1,7 +1,3 @@
-.simplelogin .name {
-  background-image: url(../images/menu-deploy-icon.png);
-}
-
 .simplelogin {
   /*background-image: url(../images/login-banner.jpg);*/
   background-repeat: no-repeat;
@@ -225,6 +221,10 @@
 
 .simplelogin label.password-toggle input {
   background-image: none !important;
+}
+
+.simplelogin .messages.error{
+  text-align: left;
 }
 
 /* Iphone & Smartphone */
