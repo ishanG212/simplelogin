@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * @file
+ * Install file for the simplelogin.
+ */
+
+function simplelogin_uninstall() {
+  variable_del('simplelogin_fid');
+}
