@@ -1,6 +1,7 @@
 WHAT IS THIS?
 =============
-Simplelogin Module provides plain structure for user login, user register and user password pages.
+Simplelogin Module provides plain structure for 
+user login, user register and user password pages.
 And Customize the login screens background Image with easy steps.
 
 INSTALLATION
