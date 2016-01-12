@@ -11,4 +11,3 @@
 function simplelogin_uninstall() {
   variable_del('simplelogin_fid');
 }
-
