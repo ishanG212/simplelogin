@@ -10,7 +10,7 @@ Install the Simplelogin module the usual way at admin/build/modules.
 
 CONFIGURATION
 =============
-Configure the background image admin/config/simplelogin/loginbg.
+Configure the background image goto admin/config/simplelogin/loginbg.
 
 MAINTAINERS
 ===========
