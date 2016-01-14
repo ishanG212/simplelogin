@@ -3,6 +3,7 @@
  * @file
  * Customize login page HTML structure.
  */
+$path = drupal_get_path_alias();
 ?>
 <div class="loginregis">  
   <?php if(($path == 'user/password') || ($path == 'user/register')): ?>
