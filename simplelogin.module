@@ -15,7 +15,6 @@ function simplelogin_preprocess_page(&$variables, $hook) {
       $array = array('type' => 'file', 'weight' => 999, 'group' => CSS_THEME);
       drupal_add_css(drupal_get_path('module', 'simplelogin') . "/css/simplelogin.css", $array);
       $variables['theme_hook_suggestions'][] = 'page__simplelogin';
-      
       $variable = variable_get('simplelogin_fid', '');
       if ($variable) {
         $file = file_load($variable);
