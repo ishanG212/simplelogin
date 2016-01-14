@@ -15,6 +15,15 @@ function simplelogin_preprocess_page(&$variables, $hook) {
       $array = array('type' => 'file', 'weight' => 999, 'group' => CSS_THEME);
       drupal_add_css(drupal_get_path('module', 'simplelogin') . "/css/simplelogin.css", $array);
       $variables['theme_hook_suggestions'][] = 'page__simplelogin';
+
+      $path = drupal_get_path_alias();
+      $variable = variable_get('simplelogin_fid', '');
+      if ($variable) {
+        $file = file_load($variable);
+        $bgimg = file_create_url($file->uri);
+        $css = "body.simplelogin {background-image: url('$bgimg') }";
+        drupal_add_css($css, 'inline');
+      }
     }
   }
 }
@@ -63,7 +72,7 @@ function simplelogin_form_alter(&$form, &$form_state, $form_id) {
         break;
 
       case 'user_login':
-        $form['actions']['submit']['#value'] = 'Login to Account';
+        $form['actions']['submit']['#value'] = t('Login to Account');
       case 'user_pass':
         if (isset($value['#type']) && in_array($value['#type'], $types)) {
           $form[$key]['#attributes']["placeholder"] = $value["#title"];
@@ -102,6 +111,8 @@ function simplelogin_menu() {
     'weight' => 3,
     'page callback' => 'system_admin_menu_block_page',
     'access arguments' => array('administer site configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
   );
   $items['admin/config/simplelogin/loginbg'] = array(
     'title' => 'Login Configuration Settings',
@@ -131,7 +142,7 @@ function simplelogin_background_form($form, &$form_state) {
       'file_validate_is_image' => array(),
     ),
     '#progress_indicator' => 'throbber',
-    '#progress_message' => 'Uploading...',
+    '#progress_message' => t('Uploading...'),
     '#process' => array('simplelogin_file_element_process'),
     '#theme' => 'sl_imageupload',
   );
