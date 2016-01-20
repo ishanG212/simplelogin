@@ -119,7 +119,7 @@ function simplelogin_menu() {
     'page arguments' => array('simplelogin_background_form'),
     'access arguments' => array('administer site configuration'),
     'file' => 'simplelogin.inc',
-    'file path' => drupal_get_path('module', 'simplelogin').'/inc',
+    'file path' => drupal_get_path('module', 'simplelogin') . '/inc',
     'type' => MENU_NORMAL_ITEM,
   );
   return $items;

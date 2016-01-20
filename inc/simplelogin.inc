@@ -4,9 +4,9 @@
  * The Login screens, which controls the customized background image.
  */
 
- /**
- * Implements of background image form.
- */
+/**
+  * Implements of background image form.
+  */
 function simplelogin_background_form($form, &$form_state) {
   $form['login_bgimage'] = array(
     '#type' => 'managed_file',
@@ -22,7 +22,7 @@ function simplelogin_background_form($form, &$form_state) {
     ),
     '#progress_indicator' => 'throbber',
     '#progress_message' => t('Uploading...'),
-    //'#process' => array('simplelogin_file_element_process'),
+    // '#process' => array('simplelogin_file_element_process'),
     '#theme' => 'simplelogin_imageupload',
   );
   $form['#submit'][] = 'simplelogin_background_form_submit';
@@ -32,11 +32,11 @@ function simplelogin_background_form($form, &$form_state) {
 /**
  * Implements of element process.
  */
-/*function simplelogin_file_element_process($element, &$form_state, $form) {
-  $element = file_managed_file_process($element, $form_state, $form);
-  $element['upload_button']['#access'] = FALSE;
-  return $element;
-}*/
+// function simplelogin_file_element_process($element, &$form_state, $form) {
+//  $element = file_managed_file_process($element, $form_state, $form);
+//  $element['upload_button']['#access'] = FALSE;
+//  return $element;
+//}
 
 /**
  * Implements of form submit function.
