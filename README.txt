@@ -6,7 +6,7 @@ And Customize the login screens background Image with easy steps.
 
 INSTALLATION
 ============
-Install the Simplelogin module the usual way at admin/build/modules.
+Install the Simplelogin module the usual way at admin/modules.
 
 CONFIGURATION
 =============

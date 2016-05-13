@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * The Login screens, which controls the customized background image.
