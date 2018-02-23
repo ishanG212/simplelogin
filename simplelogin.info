@@ -1,5 +1,0 @@
-name = Simple Login
-description = Simple Login, Register, Password Reset with Background Image
-core = 7.x
-
-configure = admin/config/simplelogin/loginbg
