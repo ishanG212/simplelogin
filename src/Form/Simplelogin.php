@@ -37,6 +37,9 @@ class Simplelogin extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, Request $request = NULL) {
+
+    $form_state->disableCache();
+
     $simplelogin_config = $this->config('simplelogin.settings');
     
     $imageid = $simplelogin_config->get('background_image');
@@ -71,13 +74,14 @@ class Simplelogin extends ConfigFormBase {
         '#description'   => $this->t('If enabled, the background image will be added on the simple login pages.'),
       ),
       'settings'          => array(
-        '#type'           => 'fieldset',
-        '#title'          => $this->t('Background Image Settings'),          
+        '#type'           => 'details',
+        '#title'          => $this->t('Background Image Settings'),
+        '#open'            => TRUE,        
           'background_image'   =>  array(
             '#type'            => 'managed_file',
             '#name'            => 'Background Image',
             '#title'           => $this->t('Image'),
-            '#default_value'   => $simplelogin_config->get('background_image'),
+            '#default_value'   => $simplelogin_config->get('background_image') ? $simplelogin_config->get('background_image') : '',
             '#description'     =>  $this->t('Upload an image file for the Simplelogin pages'),
             '#upload_location' => 'public://simplelogin/',
             '#multiple'        => FALSE,
@@ -95,7 +99,7 @@ class Simplelogin extends ConfigFormBase {
             '#type'          => 'checkbox',
             '#title'         => $this->t('Opacity'),
             '#default_value' => $simplelogin_config->get('background_opacity'),
-            '#description'   => $this->t('If enabled, the opacity will be added to the SimpleLogin pages. so the background image will take up opacity.'),
+            '#description'   => $this->t('If enabled, the opacity will be added to the SimpleLogin pages. so the background image will take up with opacity.'),
           ),
       ),
       'background_color' => array(
@@ -103,7 +107,7 @@ class Simplelogin extends ConfigFormBase {
         '#title' => $this->t('Color'),
         '#required' => TRUE,
         '#default_value' => $simplelogin_config->get('background_color') ? $simplelogin_config->get('background_color') : '#00bfff', //#76b852',
-        '#description' => 'If you want the background color you need to remove the background image. (example: [Red: 0, Green:191, Blue:255])',        
+        '#description' => 'If you want the background color you need to remove the background image. (example: [Red: 0, Green:191, Blue:255] , [red:118, Green:184, Blue:82])',        
       ),
       'wrapper_width' => array(
         '#type' => 'textfield',
@@ -114,11 +118,16 @@ class Simplelogin extends ConfigFormBase {
         '#size' => 5,
         '#required' => TRUE,
       ),
-      'unset_css' => array(
-        '#type' => 'textarea',
-        '#title' => $this->t('Unset CSS file path'),
-        '#default_value' => $simplelogin_config->get('unset_css') ? $simplelogin_config->get('unset_css') : '',
-        '#description' => 'Remove unwanted CSS files (each separate line)',
+      'advanced' => array(
+        '#type'  => 'details',
+        '#title' => $this->t('Advanced Settings'),
+        '#open'  => FALSE,
+          'unset_css' => array(
+            '#type' => 'textarea',
+            '#title' => $this->t('Unset CSS file path'),
+            '#default_value' => $simplelogin_config->get('unset_css') ? $simplelogin_config->get('unset_css') : '',
+            '#description' => 'Remove unwanted CSS files each path as a separate line(example: core/themes/classy/css/components/button.css)',
+          ),
       ),
     );
     return parent::buildForm($form, $form_state);

@@ -125,6 +125,6 @@ body.simplelogin.opacity::before {
   and (max-device-width: 480px)
   and (-webkit-min-device-pixel-ratio: 2) {
   .simplelogin-form { 
-    width: 210px; 
+    width: 210px !important; 
   }
 }

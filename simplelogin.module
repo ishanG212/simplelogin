@@ -20,8 +20,8 @@ function simplelogin_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'help.page.simplelogin':
       $output = '';
-      $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Simplelogin Help page') . '</p>';
+      $output .= '<h3>' . t('Settings') . '</h3>';
+      $output .= '<p>' . t('Simplelogin settings: /admin/config/simplelogin') . '</p>';
       return $output;
       break;
   }
