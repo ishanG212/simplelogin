@@ -149,11 +149,12 @@ class Simplelogin extends ConfigFormBase {
     $values = $form_state->getValues();
 
     $imageid = $values['background_image'];
-    $file = \Drupal\file\Entity\File::load($imageid[0]);
-
-    if (gettype($file) == 'object') {      
-      $file->setPermanent();  // FILE_STATUS_PERMANENT;
-      $file->save();
+    if(isset($imageid[0])) {
+      $file = \Drupal\file\Entity\File::load($imageid[0]);
+      if (gettype($file) == 'object') {
+        $file->setPermanent();  // FILE_STATUS_PERMANENT;
+        $file->save();
+      }
     }
 
     $this->config('simplelogin.settings')    
