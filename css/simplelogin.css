@@ -47,6 +47,9 @@ body.simplelogin {
 .simplelogin-logo {
   text-align: center;
 }
+.simplelogin-logo img{
+  width:100%;
+}
 .simplelogin .tabs.primary, .simplelogin .tabs--primary, .simplelogin .page-title {
   display: none;
 }
@@ -154,6 +157,7 @@ body.simplelogin.opacity::before {
 .simplelogin .simplelogin-link {
   text-align: right;
   text-transform: uppercase;
+  padding: 5px 0;
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #ababab;
