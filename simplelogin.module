@@ -2,7 +2,7 @@
 
 /**
  * @file
- * The module file for simplelogin module.
+ * The module file for simplelogin pages module.
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
