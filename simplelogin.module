@@ -129,25 +129,20 @@ function simple_login_settings($arguments) {
   $background_opacity = $simplelogin_settings->get('background_opacity', '');
   $background_color = $simplelogin_settings->get('background_color', '');
   $wrapper_width = $simplelogin_settings->get('wrapper_width', '');
+  $unset_active_css = $simplelogin_settings->get('unset_active_css', '');
   $unset_css = $simplelogin_settings->get('unset_css', '');
 
   switch ($arguments) {
     case "color":
       $simplelogin = $background_color ? $background_color : '#00bfff';
     break;
-    case "image":
+    case "image":      
+      $file = File::load($background_image[0]); // File Load
       $fileRelativePath = '';
-      if (isset($background_image[0])) {
-        $file = File::load($background_image[0]); // File Load
-        if ($file) {
-          $fileUrl = $file->getFileUri();
-          $fileRelativePath = file_url_transform_relative(file_create_url($fileUrl));
-        }
-        $simplelogin = $fileRelativePath;
+      if ($file) {
+        $fileUrl = $file->getFileUri();
+        $fileRelativePath = file_url_transform_relative(file_create_url($fileUrl));
       }
-      else {
-        $simplelogin = '';
-       }
       $simplelogin = $fileRelativePath;
     break;
     case "opacity":
@@ -158,6 +153,9 @@ function simple_login_settings($arguments) {
     break;
     case "width":
       $simplelogin = $wrapper_width ? $wrapper_width : '360';
+    break;
+    case 'unset_active_css':
+      $simplelogin = $unset_active_css ? $unset_active_css : '';
     break;
     case "unset_css":
       $simplelogin = $unset_css ? $unset_css : '';
@@ -238,6 +236,17 @@ function simplelogin_css_alter(&$css, \Drupal\Core\Asset\AttachedAssetsInterface
       $unset_css_array = explode("\n", $unset_css);
       foreach ($unset_css_array as $key => $value) {
         unset($css[trim($value)]);
+      }
+      
+      // The active theme CSS files are removed from the simple login pages
+      $unset_active_css = simple_login_settings('unset_active_css');
+      if($unset_active_css) {
+        foreach ($css as $stylesheet => $value) {
+          $theme = \Drupal::theme()->getActiveTheme();
+          if (strstr($stylesheet, $theme->getPath())) {
+            unset($css[trim($value['data'])]);
+          }
+        }
       }
     }
   }

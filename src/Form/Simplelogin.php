@@ -58,9 +58,7 @@ class Simplelogin extends ConfigFormBase {
           '#uri' => $fileUrl,
         );
       }
-    }    
-    //$renderer = \Drupal::service('renderer');
-    //$renderer->addCacheableDependency($image_render, $file);
+    }
 
     $form['simplelogin'] = array(
       '#type'            => 'details',
@@ -122,6 +120,12 @@ class Simplelogin extends ConfigFormBase {
         '#type'  => 'details',
         '#title' => $this->t('Advanced Settings'),
         '#open'  => FALSE,
+          'unset_active_css' => array(
+            '#type'          => 'checkbox',
+            '#title'         => $this->t('Unset Active theme CSS files'),
+            '#default_value' => $simplelogin_config->get('unset_active_css'),
+            '#description'   => $this->t('If enabled, active theme CSS files are removed from the simple login pages.'),
+          ),
           'unset_css' => array(
             '#type' => 'textarea',
             '#title' => $this->t('Unset CSS file path'),
@@ -149,12 +153,11 @@ class Simplelogin extends ConfigFormBase {
     $values = $form_state->getValues();
 
     $imageid = $values['background_image'];
-    if(isset($imageid[0])) {
-      $file = \Drupal\file\Entity\File::load($imageid[0]);
-      if (gettype($file) == 'object') {
-        $file->setPermanent();  // FILE_STATUS_PERMANENT;
-        $file->save();
-      }
+    $file = \Drupal\file\Entity\File::load($imageid[0]);
+
+    if (gettype($file) == 'object') {      
+      $file->setPermanent();  // FILE_STATUS_PERMANENT;
+      $file->save();
     }
 
     $this->config('simplelogin.settings')    
@@ -163,6 +166,7 @@ class Simplelogin extends ConfigFormBase {
       ->set('background_color', $values['background_color'])
       ->set('background_opacity', $values['background_opacity'])
       ->set('wrapper_width', $values['wrapper_width'])
+      ->set('unset_active_css', $values['unset_active_css'])
       ->set('unset_css', $values['unset_css'])
       ->save();
   }
