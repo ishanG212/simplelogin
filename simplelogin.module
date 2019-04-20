@@ -237,6 +237,7 @@ function simplelogin_css_alter(&$css, \Drupal\Core\Asset\AttachedAssetsInterface
       foreach ($unset_css_array as $key => $value) {
         unset($css[trim($value)]);
       }
+      
       // The active theme CSS files are removed from the simple login pages
       $unset_active_css = simple_login_settings('unset_active_css');
       if($unset_active_css) {
