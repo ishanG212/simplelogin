@@ -13,7 +13,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 
 /**
- * Defines a form that configures settings.
+ * Defines a form that configure settings.
  */
 class Simplelogin extends ConfigFormBase {
 
