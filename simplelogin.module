@@ -216,9 +216,9 @@ function simplelogin_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $fo
         break;
     }
   }
-  if (\Drupal::moduleHandler()->moduleExists('captcha')) {
-    $form['captcha']['#after_build'][] = 'simplelogin_set_captcha';
-  }
+  //if (\Drupal::moduleHandler()->moduleExists('captcha')) {
+    //$form['captcha']['#after_build'][] = 'simplelogin_set_captcha';
+  //}
 }
 
 /**
