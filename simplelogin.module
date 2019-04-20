@@ -136,12 +136,14 @@ function simple_login_settings($arguments) {
     case "color":
       $simplelogin = $background_color ? $background_color : '#00bfff';
     break;
-    case "image":      
-      $file = File::load($background_image[0]); // File Load
+    case "image":
       $fileRelativePath = '';
-      if ($file) {
-        $fileUrl = $file->getFileUri();
-        $fileRelativePath = file_url_transform_relative(file_create_url($fileUrl));
+      if(isset($background_image[0])){ 
+        $file = File::load($background_image[0]); // File Load
+        if ($file) {
+          $fileUrl = $file->getFileUri();
+          $fileRelativePath = file_url_transform_relative(file_create_url($fileUrl));
+        }
       }
       $simplelogin = $fileRelativePath;
     break;

@@ -1,4 +1,4 @@
-/*/**
+/**
  * @file
  * The UserLogin screens, which controls the customized background image.
  */
@@ -48,7 +48,7 @@ body.simplelogin {
   text-align: center;
 }
 .simplelogin-logo img{
-  width:100%;
+  max-width: 100%;
 }
 .simplelogin .tabs.primary, .simplelogin .tabs--primary, .simplelogin .page-title {
   display: none;
