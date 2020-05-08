@@ -174,14 +174,19 @@ function simple_login_settings($arguments) {
  * {@inheritdoc}
  */
 function simplelogin_theme_registry_alter(&$theme_registry) {
-  $module_path = drupal_get_path('module', 'simplelogin');
+  $path = drupal_get_path('module', 'simplelogin');
+  // Check if file exists in the theme directory.
+  $theme = \Drupal::theme()->getActiveTheme();
+  if (file_exists($theme->getPath().'/templates/page--simplelogin.html.twig')) {
+    $path = drupal_get_path('theme', $theme->getName());    
+  }
 
   $theme_registry['page__simplelogin'] = array(
     'preprocess functions' => array(
       0 => 'simplelogin_preprocess_simplelogin',
     ),
     'template' => 'page--simplelogin',
-    'path' => $module_path. '/templates',
+    'path' => $path. '/templates',
     'render element' => 'page',
     'type' => 'base_theme_engine',
   );
@@ -221,6 +226,29 @@ function simplelogin_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $fo
   //if (\Drupal::moduleHandler()->moduleExists('captcha')) {
     //$form['captcha']['#after_build'][] = 'simplelogin_set_captcha';
   //}
+}
+
+/**
+ * Implements hook_element_info_alter().
+ */
+function simplelogin_element_info_alter(array &$types) {
+  if (isset($types['password_confirm'])) {
+    $types['password_confirm']['#process'][] = 'simplelogin_password_confirm';
+  }
+}
+
+/**
+ * Process the password_confirm element.
+ */
+function simplelogin_password_confirm($element) {
+  // hiding password title
+  $element['pass1']['#title_display'] = 'invisible';
+  $element['pass2']['#title_display'] = 'invisible';
+  // Adding placeholder
+  $element['pass1']["#placeholder"] = $element['pass1']['#title'];
+  $element['pass2']["#placeholder"] = $element['pass2']['#title'];
+
+  return $element;
 }
 
 /**

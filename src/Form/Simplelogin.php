@@ -3,19 +3,49 @@
 /**
  * @file
  * Contains \Drupal\simplelogin\Form\SettingsForm.
+ * Simplelogin settings form.
  */
 
 namespace Drupal\simplelogin\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Url;
+use Drupal\Core\Image\ImageFactory;
+use Drupal\file\Entity\File;
 
 /**
  * Defines a form that configure settings.
  */
 class Simplelogin extends ConfigFormBase {
+
+  /**
+   * Image factory.
+   *
+   * @var \Drupal\Core\Image\ImageFactory
+   *   Image factory.
+   */
+  protected $imageFactory;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(ConfigFactoryInterface $config_factory, ImageFactory $image_factory) {
+    parent::__construct($config_factory);
+    $this->imageFactory = $image_factory;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('config.factory'),
+      $container->get('image.factory')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -41,14 +71,14 @@ class Simplelogin extends ConfigFormBase {
     $form_state->disableCache();
 
     $simplelogin_config = $this->config('simplelogin.settings');
-    
     $imageid = $simplelogin_config->get('background_image');
+
     if ($imageid) {
-      $file = \Drupal\file\Entity\File::load($imageid[0]);  // File Load 
+      $file = File::load($imageid[0]);  // File Load
       $fileUrl = $file->getFileUri();
 
-      // check if image is valid.
-      $image = \Drupal::service('image.factory')->get($fileUrl);
+      // Check if image is valid.
+      $image = $this->imageFactory->get($fileUrl);
       if ($image->isValid()) {
         $image_render = array(
           '#theme' => 'image_style',
@@ -105,13 +135,13 @@ class Simplelogin extends ConfigFormBase {
         '#title' => $this->t('Color'),
         '#required' => TRUE,
         '#default_value' => $simplelogin_config->get('background_color') ? $simplelogin_config->get('background_color') : '#00bfff', //#76b852',
-        '#description' => 'If you want the background color you need to remove the background image. (example: [Red: 0, Green:191, Blue:255] , [red:118, Green:184, Blue:82])',        
+        '#description' => $this->t('If you want the background color you need to remove the background image. (example: [Red: 0, Green:191, Blue:255] , [red:118, Green:184, Blue:82])'),        
       ),
       'wrapper_width' => array(
         '#type' => 'textfield',
         '#title' => $this->t('Wrapper width'),
         '#default_value' => $simplelogin_config->get('wrapper_width') ? $simplelogin_config->get('wrapper_width') : '360',
-        '#description' => 'Simplelogin wrapper width in pixels.(example:360)',
+        '#description' => $this->t('Simplelogin wrapper width in pixels.(example:360)'),
         '#field_suffix' => 'PX',
         '#size' => 5,
         '#required' => TRUE,
@@ -130,13 +160,16 @@ class Simplelogin extends ConfigFormBase {
             '#type' => 'textarea',
             '#title' => $this->t('Unset CSS file path'),
             '#default_value' => $simplelogin_config->get('unset_css') ? $simplelogin_config->get('unset_css') : '',
-            '#description' => 'Remove unwanted CSS files each path as a separate line(example: core/themes/classy/css/components/button.css)',
+            '#description' => $this->t('Remove unwanted CSS files each path as a separate line(example: core/themes/classy/css/components/button.css)'),
           ),
       ),
     );
     return parent::buildForm($form, $form_state);
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $background_image = $form_state->getValue(['background_image']);
     $opacity = $form_state->getValue(['background_opacity']);
@@ -152,13 +185,14 @@ class Simplelogin extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
 
-    $imageid = $values['background_image'];
-    $file = \Drupal\file\Entity\File::load($imageid[0]);
-
-    if (gettype($file) == 'object') {      
-      $file->setPermanent();  // FILE_STATUS_PERMANENT;
-      $file->save();
-    }
+    $image_id = isset($values['background_image']) ? $values['background_image'] : '';
+    if (!empty($image_id)) {
+      $file = File::load($image_id[0]);
+      if ($file instanceof File) {
+        $file->setPermanent();  // FILE_STATUS_PERMANENT;
+        $file->save();
+      }
+    }  
 
     $this->config('simplelogin.settings')    
       ->set('background_active', $values['background_active'])
@@ -169,6 +203,7 @@ class Simplelogin extends ConfigFormBase {
       ->set('unset_active_css', $values['unset_active_css'])
       ->set('unset_css', $values['unset_css'])
       ->save();
-  }
 
+    drupal_flush_all_caches();
+  }
 }
