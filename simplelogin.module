@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Asset\AttachedAssetsInterface;
 /**
  * @file
  * The module file for simplelogin pages module.
@@ -104,14 +106,14 @@ function simplelogin_page_attachments(array &$attachments) {
 
 function simplelogin_preprocess_simplelogin(&$variables) {  
   $path = \Drupal::service('path.current')->getPath();
-  $module_path = drupal_get_path('module', 'simplelogin');
+  $module_path = \Drupal::service('extension.list.module')->getPath('simplelogin');
 
   $variables['#attached']['library'][] = 'simplelogin/simplelogin-library';
 
   // Able to use custom variables
   $variables['path'] = $path;
   $variables['base_path'] = base_path();
-  $variables['logo'] = file_url_transform_relative(file_create_url(theme_get_setting('logo.url')));  
+  $variables['logo'] = \Drupal::service('file_url_generator')->generateString(theme_get_setting('logo.url')); 
   $variables['background_class'] = simple_login_settings('active');
   $variables['background_opacity'] = simple_login_settings('opacity');
   $variables['wrapper_width'] = simple_login_settings('width');
@@ -142,7 +144,7 @@ function simple_login_settings($arguments) {
         $file = File::load($background_image[0]); // File Load
         if ($file) {
           $fileUrl = $file->getFileUri();
-          $fileRelativePath = file_url_transform_relative(file_create_url($fileUrl));
+          $fileRelativePath = \Drupal::service('file_url_generator')->generateString($fileUrl);
         }
       }
       $simplelogin = $fileRelativePath;
@@ -174,11 +176,11 @@ function simple_login_settings($arguments) {
  * {@inheritdoc}
  */
 function simplelogin_theme_registry_alter(&$theme_registry) {
-  $path = drupal_get_path('module', 'simplelogin');
+  $path = \Drupal::service('extension.list.module')->getPath('simplelogin');
   // Check if file exists in the theme directory.
   $theme = \Drupal::theme()->getActiveTheme();
   if (file_exists($theme->getPath().'/templates/page--simplelogin.html.twig')) {
-    $path = drupal_get_path('theme', $theme->getName());    
+    $path = \Drupal::service('extension.list.theme')->getPath($theme->getName());    
   }
 
   $theme_registry['page__simplelogin'] = array(
@@ -197,7 +199,7 @@ function simplelogin_theme_registry_alter(&$theme_registry) {
  *
  * {@inheritdoc}
  */
-function simplelogin_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function simplelogin_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   $types = array('textfield', 'email', 'textarea', 'password', 'container');
   foreach ($form as $key => $value) {
     switch ($form_id) {
@@ -256,7 +258,7 @@ function simplelogin_password_confirm($element) {
  *
  * {@inheritdoc}
  */
-function simplelogin_css_alter(&$css, \Drupal\Core\Asset\AttachedAssetsInterface $assets) {
+function simplelogin_css_alter(&$css, AttachedAssetsInterface $assets) {
   $path = \Drupal::service('path.current')->getPath();  
   $user_path = array('/user', '/user/login', '/user/password', '/user/register');
   $current_user = \Drupal::currentUser();  // Whether the current user is anonymous or authenticated
