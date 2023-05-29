@@ -1,14 +1,14 @@
 {
-  “name”: “drupal/simplelogin”,
-  “type”: “drupal-module”,
-  “description”: “Preview view modes for every entity type”,
-  “keywords”: [“Drupal”],
-  “license”: “GPL-2.0+“,
-  “homepage”: “https://www.drupal.org/project/simplelogin”,
-  “minimum-stability”: “dev”,
-  “support”: {
-    “issues”: “http://drupal.org/project/issues/simplelogin”,
-    “source”: “http://cgit.drupalcode.org/simplelogin”
+  "name": "drupal/simplelogin",
+  "type": "drupal-module",
+  "description": "Preview view modes for every entity type",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/simplelogin",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "http://drupal.org/project/issues/simplelogin",
+    "source": "http://cgit.drupalcode.org/simplelogin"
   },
-  “require”: { }
+  "require": { }
 }
