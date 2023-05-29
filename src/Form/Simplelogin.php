@@ -121,7 +121,7 @@ class Simplelogin extends ConfigFormBase {
           ),
           'background_url' => array(
             '#type'   => 'item',
-            '#markup' => render($image_render),
+            '#markup' => \Drupal::service('renderer')->render($image_render),
           ),
           'background_opacity' => array(
             '#type'          => 'checkbox',
